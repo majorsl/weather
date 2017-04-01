@@ -1,0 +1,6 @@
+Order allow,deny
+Allow from all
+Deny from 180.76
+Options Includes FollowSymLinks
+AddType text/html .shtml
+AddHandler server-parsed .shtml
