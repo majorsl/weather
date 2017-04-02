@@ -1,10 +1,10 @@
 #!/bin/sh
-#version 3.0.9
+#version 3.1.0
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
 
-#----Set Options Here---------------------------------------------------------------------
+#Set Options Here--------------------------------------------------------------------------------------------------------
 weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script.
 weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/" #temp storage of weather feeds.
 weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/" #where the output txt files for the html goes.
@@ -13,7 +13,7 @@ wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
 wgetdir="/usr/local/bin/" #location of wget binary.
 wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt" #location of your wunderground api.
 terminalnotifier="/Applications/" #location of terminal-notifier.app.
-#-----------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------
 
 if [ "$#" -eq 0 ]; then
   echo "**Exiting, please provide zipcode(s) for processing.**"
@@ -679,6 +679,7 @@ ECHO -n "$TEMPHOUR5""&deg" > "$weatherdatadir"temphour5.txt
 ECHO -n "$TEMPHOUR6""&deg" > "$weatherdatadir"temphour6.txt
 ECHO -n "$TEMPHOUR7""&deg" > "$weatherdatadir"temphour7.txt
 ECHO -n "$TEMPHOUR8""&deg" > "$weatherdatadir"temphour8.txt
+ECHO -n "$TEMPHOUR9""&deg" > "$weatherdatadir"temphour9.txt
 
 #Set large weather icon, error check if the large current condition icon is Unknown then lets use the icon for today, if that icon is Unknown also, keep the last known one until the next interval check.
 if [ "$BIGICON" = "Unknown" ]; then
