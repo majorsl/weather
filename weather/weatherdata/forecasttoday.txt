@@ -1,1 +1,1 @@
-<div class="forecast2">Cloudy skies this morning will become partly cloudy this afternoon. High near 50F. Winds WNW at 10 to 15mph.</div>
+Cloudy skies early, followed by partial clearing. High 49F. Winds WNW at 10 to 15mph.
