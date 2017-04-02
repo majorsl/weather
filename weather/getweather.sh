@@ -1,17 +1,8 @@
 #!/bin/sh
-#version 3.0.7
+#version 3.0.8
 
-#Zip code parsed from command line. If no zip, we'll do all the ones in the array. If
+#Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
-if [ "$#" -eq 0 ]; then
-  echo "**Exiting, please provide zipcode(s) for processing.**"
-  /Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Failed, please provide zipcode(s) for processing." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
-else
-  arr=("$@")
-fi
-
-for ZIPCODE in "${arr[@]}"
-do
 
 #----Set Options Here---------------------------------------------------------------------
 weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script.
@@ -21,10 +12,21 @@ weatherimagedir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherimages/" #
 wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
 wgetdir="/usr/local/bin/" #location of wget binary.
 wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt" #location of your wunderground api.
+terminalnotifier="/Applications/" #location of terminal-notifier.app.
 #-----------------------------------------------------------------------------------------
 
+if [ "$#" -eq 0 ]; then
+  echo "**Exiting, please provide zipcode(s) for processing.**"
+  "$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Failed, please provide zipcode(s) for processing." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
+else
+  arr=("$@")
+fi
+
+for ZIPCODE in "${arr[@]}"
+do
+
 echo "**Processing ""$ZIPCODE""**"
-/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Processing $ZIPCODE." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
+"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Processing $ZIPCODE." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 
 #Get time for sunrise/set comparison and date for special icons.
 TIME=`date +%H%M`
@@ -39,7 +41,7 @@ cd "$weatherfeeddir"
 SIZE=`ls -s weatherfeed$ZIPCODE.json | cut -d " " -f1`
 if [ "$SIZE" -lt "9" ]; then
 	echo "**Bad weather data or no network connection. Will try again at next interval.**"
-	/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage /Users/majorsl/Sites/weather/weatherimages/weather"$ZIPCODE".jpg
+	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage /Users/majorsl/Sites/weather/weatherimages/weather"$ZIPCODE".jpg
 	exit
 fi
 
@@ -130,7 +132,7 @@ l2=`echo $FORECAST | wc -m | tr -d ' '`
 #error out if little or no forecast data, probably a malformed json file. Else, adjust forcast font size.
 if [ "$l2" -lt "10" ]; then
 	echo "**Bad weather data or no network connection. Will try again at next interval.**"
-	/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
+	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 	exit
 fi
 if [ "$l2" -gt "100" ] && [ "$l2" -lt "154" ]; then
@@ -775,11 +777,10 @@ ECHO -n "$HISTORIC""&deg" > "$weatherdatadir"historic.txt
 
 #Save the newly created data as an image from the HTML.
 "$wkhtmltoimagedir"wkhtmltoimage --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
-
 "$wkhtmltoimagedir"wkhtmltoimage --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb$ZIPCODE.jpg
 
 #Notification Center alert that we were successful.
-/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
+"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 
 #Done parsing zip codes
 done
