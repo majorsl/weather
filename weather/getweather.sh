@@ -1,5 +1,5 @@
 #!/bin/sh
-#version 3.1.0
+#version 3.1.1
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -25,8 +25,6 @@ fi
 for ZIPCODE in "${arr[@]}"
 do
 
-"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Processing $ZIPCODE." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
-
 #Get time for sunrise/set comparison and date for special icons.
 TIME=`date +%H%M`
 DATE=`date +%m%d`
@@ -42,9 +40,10 @@ if [ "$SIZE" -lt "9" ]; then
 	echo "**$ZIPCODE - Bad weather data or no network connection. Will try again at next interval.**"
 	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage /Users/majorsl/Sites/weather/weatherimages/weather"$ZIPCODE".jpg
 	exit
+else
+	ECHO "**$ZIPCODE - Feed retrieved. Beginning data processing.**"
+	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Processing $ZIPCODE." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 fi
-
-ECHO "**$ZIPCODE - Feed retrieved. Beginning data processing.**"
 
 #Load weather data to single variable.
 WeatherFile="weatherfeed$ZIPCODE.json"
@@ -69,6 +68,10 @@ if [ "$CURRENTCONDITIONPRETTY" != "Unknown" ] || [ "$CURRENTCONDITIONPRETTY" != 
 		ECHO "$CURRENTTEMP&deg" > "$weatherdatadir"currenttemp.txt
 		ECHO "$CURRENTCONDITIONPRETTY" > "$weatherdatadir"currentcondition.txt
 fi
+
+#Almanac what is the historic average temp
+HISTORIC=`echo "$WeatherData" | grep -m 2 '"almanac": {' -A4 | tail -n1 | sed 's/.*\: "//' | cut -d '"' -f1`
+ECHO -n "$HISTORIC""&deg" > "$weatherdatadir"historic.txt
 
 #Feels Like: First, look for windchill and use that, then heat index and use that, then current temp.
 WINDCHILL=`echo "$WeatherData" | grep -e '"windchill_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g'`
@@ -521,7 +524,6 @@ if [ "$CURRENTCOND" = "Fog" ]; then
 	DAYNIGHTSIG="blogweathergrey.css"
 fi
 
-
 if [ "$CURRENTCOND" = "Clear" ]; then
 	DAYNIGHT="weatherbluebright.css"
 	DAYNIGHTSIG="blogweatherbluebright.css"
@@ -714,7 +716,33 @@ ln -sf "$MOONTIME7".png timephase7.png
 ln -sf "$MOONTIME8".png timephase8.png
 ln -sf "$MOONTIME9".png timephase9.png
 
-#Set any specials events e.g. Christmas.
+#Weather Warnings
+WARNING=" - "`echo "$WeatherData" | grep -m 3 '"alerts"' -A3 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
+
+#Weather Warnings: If equal one of these, there might be an additional statement title in the next block we should use.
+if [ "$WARNING" = " - Special Statement" ] || [ "$WARNING" = " - Special Weather Statement" ]; then
+	WARNING=" - "`echo "$WeatherData" | grep -m 2 '"alerts"' -A15 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
+fi
+
+#Weather Warnings: Check the string length, if less than 5 means garbage or no warning in string or we've failed over to the Special Statement string and it's not correct e.g. passes - KMSS.
+l2=`echo $WARNING | wc -m`
+if [ "$l2" -lt "8" ]; then
+	WARNING=""
+fi
+
+#Weather Warnings: Shorten some long strings/remove irrelevant warnings.
+if [ "$WARNING" = " - Severe Thunderstorm Watch" ]; then
+	WARNING="- Severe Tstorm Watch"
+fi
+if [ "$WARNING" = " - Severe Thunderstorm Warning" ]; then
+	WARNING="- Severe Tstorm Warning"
+fi
+if [ "$WARNING" = " - Small Craft Advisory" ]; then
+	WARNING=""
+fi
+ECHO -n "$WARNING" > "$weatherdatadir"warning.txt
+
+#Set any specials events.
 cd "$weatherdir"images
 
 if [ "$DATE" = "1224" ] || [ "$DATE" = "1225" ]; then
@@ -736,38 +764,6 @@ if [ "$DATE" = "1101" ] || [ "$DATE" = "0718" ] || [ "$DATE" = "0705" ] || [ "$D
 	ln -sf empty.png eventabove.png
 	ln -sf empty.png eventbelow.png
 fi
-	
-#Weather Warnings
-cd "$weatherdir"
-
-WARNING=" - "`echo "$WeatherData" | grep -m 3 '"alerts"' -A3 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
-
-#If warnings equal one of these, there might be an additional statement title in the next block we should use.
-if [ "$WARNING" = " - Special Statement" ] || [ "$WARNING" = " - Special Weather Statement" ]; then
-	WARNING=" - "`echo "$WeatherData" | grep -m 2 '"alerts"' -A15 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
-fi
-
-#Check the string length of the warning. Less than 5 means garbage or no warning in string or we've failed over to the Special Statement string and it's not correct e.g. passes - KMSS.
-l2=`echo $WARNING | wc -m`
-if [ "$l2" -lt "8" ]; then
-	WARNING=""
-fi
-
-#Shorten some long strings/remove irrelevant warnings
-if [ "$WARNING" = " - Severe Thunderstorm Watch" ]; then
-	WARNING="- Severe Tstorm Watch"
-fi
-if [ "$WARNING" = " - Severe Thunderstorm Warning" ]; then
-	WARNING="- Severe Tstorm Warning"
-fi
-if [ "$WARNING" = " - Small Craft Advisory" ]; then
-	WARNING=""
-fi
-ECHO -n "$WARNING" > "$weatherdatadir"warning.txt
-
-#Almanac what is the historic average temp
-HISTORIC=`echo "$WeatherData" | grep -m 2 '"almanac": {' -A4 | tail -n1 | sed 's/.*\: "//' | cut -d '"' -f1`
-ECHO -n "$HISTORIC""&deg" > "$weatherdatadir"historic.txt
 
 #Save the newly created data as an image from the HTML.
 "$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
