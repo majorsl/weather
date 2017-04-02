@@ -1,7 +1,8 @@
 #!/bin/sh
-#version 3.0.5
+#version 3.0.6
 
-#Zip code parsed from command line. If no zip, we'll do all the ones in the array.
+#Zip code parsed from command line. If no zip, we'll do all the ones in the array. If
+#from the command line, format is getweather.sh 12345 67890 for as many as you like.
 
 ZIPCODE=$1
 if [ "$ZIPCODE" != "" ]; then
@@ -16,24 +17,25 @@ do
 echo "**Processing ""$ZIPCODE""**"
 
 #----Set Options Here---------------------------------------------------------------------
-weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/"
-weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/"
-weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/"
-weatherimagedir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherimages/"
-wkhtmltoimagedir="/usr/local/bin/"
-wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt"
+weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script.
+weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/" #temp storage of weather feeds.
+weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/" #where the output txt files for the html goes.
+weatherimagedir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherimages/" #location of weather widgets.
+wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
+wgetdir="/usr/local/bin/" #location of wget binary.
+wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt" #location of your wunderground api.
 #-----------------------------------------------------------------------------------------
 
 #Get time for sunrise/set comparison and date for special icons.
 TIME=`date +%H%M`
 DATE=`date +%m%d`
 
-#get data from wunderground.com.
+#Get data from wunderground.com.
 API=$(cat "$wundergroundapi")
 cd "$weatherfeeddir"
-/usr/local/bin/wget -O weatherfeed$ZIPCODE.json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
+"$wgetdir"wget -O weatherfeed$ZIPCODE.json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
 
-#check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
+#Check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
 SIZE=`ls -s weatherfeed$ZIPCODE.json | cut -d " " -f1`
 if [ "$SIZE" -lt "9" ]; then
 	echo "**Bad weather data or no network connection. Will try again at next interval.**"
@@ -43,11 +45,12 @@ fi
 
 ECHO "**Feed retrieved. Beginning data processing.**"
 
-#Process data so we minimize disk activity (Wunderground.com).
+#Load weather data to single variable.
 WeatherFile="weatherfeed$ZIPCODE.json"
 WeatherData=""
 WeatherData=`cat $WeatherFile`
 
+#Change to weather directory and extract data.
 cd "$weatherdir"
 
 #Current Conditions/Temp - round current temp to nearest int with awk. Pretty current condition. Make hyphen nowrap character &#8209;
@@ -59,7 +62,6 @@ fi
 CURRENTTEMP=`echo "$CURRENTTEMP" | sed 's/-/\&#8209;/'`
 
 #Output Conditions & Pretty up some strings without altering original data. There is an Unknown that pops-up sometimes. This keeps the last set until it goes away.
-
 CURRENTCONDITIONPRETTY=`echo $CURRENTCOND | sed 's/ mist/ \& mist/' | sed 's/ fog/ \& fog/'`
 
 if [ "$CURRENTCONDITIONPRETTY" != "Unknown" ] || [ "$CURRENTCONDITIONPRETTY" != "" ]; then
@@ -78,7 +80,7 @@ elif [ "$HEATINDEX" != "NA" ]; then
 	FEELLIKE="$HEATINDEX"
 fi
 
-#Feels Like - color font at 100+ degrees, italics for below 0, if nothing, the weather data is probably hosed and the file passed the file check.
+#Feels Like - color font at 100+ degrees, italics for below 0.
 FEELCOLOR=""
 FEELCOLOR2=""
 if [ "$FEELLIKE" -gt "99" ]; then
@@ -140,7 +142,6 @@ fi
 echo $FORECAST
 
 #Big Weather Icon
-#BIGICON=`echo "$WeatherData" | grep -m1 '"icon"' | sed 's/.*\:"//' | cut -d '"' -f1`
 BIGICON="$CURRENTCOND"
 if [ "$TIME" -gt "$SUNSETMIL" ] || [ "$TIME" -lt "$SUNRISENUM" ]; then
 	NIGHTICON="night"
@@ -281,7 +282,7 @@ if [ "$DAYWIND" = "0mph" ]; then
 	DAYWINDGUST="0"
 fi
 
-#Trying to keep the widget wind to 2 lines, if we have no Gusts, then use spelled out directions.
+#Trying to keep the widget wind to 2 lines, if we have no Gusts, then use spelled out compass points.
 if [ "$DAYWINDGUST" = "0" ]; then
 	if [ "$DAYWINDIR" = "WSW" ]; then
 		DAYWINDIR="West-Southwest"
@@ -552,7 +553,7 @@ fi
 
 echo "**$MOONPHASEDIR directory set.**"
 
-#Output for Desktop Customization
+#Output for css customization
 cd "$weatherdir"
 ln -sf "$DAYNIGHT" weather.css
 ln -sf "$DAYNIGHTSIG" blogweather.css
@@ -640,9 +641,6 @@ ECHO -n "&#8776;""$HUDAY6" > "$weatherdatadir"humid6.txt
 #Set small weather icons.
 cd "$weatherdir"weathericonssm
 ln -sf "$IDAY0""$NAICON".png day0.png
-#/usr/local/bin/setlabel Green "$IDAY0""$NIGHTICON".png
-#osascript -e 'tell application "Finder" to set comment of posix file "/Users/majorsl/weather/weathericonssm/day0.png" to "$IDAY0"'
-#/usr/local/bin/setfcomment -n -c "$IDAY0" "$IDAY0""$NIGHTICON".png
 ln -sf "$IDAY1".png day1.png
 ln -sf "$IDAY2".png day2.png
 ln -sf "$IDAY3".png day3.png
