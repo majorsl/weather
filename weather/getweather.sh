@@ -1,5 +1,5 @@
 #!/bin/sh
-#version 3.0.8
+#version 3.0.9
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -25,7 +25,6 @@ fi
 for ZIPCODE in "${arr[@]}"
 do
 
-echo "**Processing ""$ZIPCODE""**"
 "$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "Processing $ZIPCODE." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 
 #Get time for sunrise/set comparison and date for special icons.
@@ -40,12 +39,12 @@ cd "$weatherfeeddir"
 #Check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
 SIZE=`ls -s weatherfeed$ZIPCODE.json | cut -d " " -f1`
 if [ "$SIZE" -lt "9" ]; then
-	echo "**Bad weather data or no network connection. Will try again at next interval.**"
+	echo "**$ZIPCODE - Bad weather data or no network connection. Will try again at next interval.**"
 	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage /Users/majorsl/Sites/weather/weatherimages/weather"$ZIPCODE".jpg
 	exit
 fi
 
-ECHO "**Feed retrieved. Beginning data processing.**"
+ECHO "**$ZIPCODE - Feed retrieved. Beginning data processing.**"
 
 #Load weather data to single variable.
 WeatherFile="weatherfeed$ZIPCODE.json"
@@ -131,7 +130,7 @@ fi
 l2=`echo $FORECAST | wc -m | tr -d ' '`
 #error out if little or no forecast data, probably a malformed json file. Else, adjust forcast font size.
 if [ "$l2" -lt "10" ]; then
-	echo "**Bad weather data or no network connection. Will try again at next interval.**"
+	echo "**$ZIPCODE - Bad weather data or no network connection. Will try again at next interval.**"
 	"$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg
 	exit
 fi
@@ -141,7 +140,6 @@ fi
 if [ "$l2" -gt "153" ]; then
 	FORECAST='<div class="forecast3">'$FORECAST'</div>'
 fi
-echo $FORECAST
 
 #Big Weather Icon
 BIGICON="$CURRENTCOND"
@@ -553,8 +551,6 @@ if [ "$TIME" -lt "$SUNRISEMINUSONE" ]; then
 	DAYNIGHT="weatherblack.css"
 fi
 
-echo "**$MOONPHASEDIR directory set.**"
-
 #Output for css customization
 cd "$weatherdir"
 ln -sf "$DAYNIGHT" weather.css
@@ -689,7 +685,6 @@ if [ "$BIGICON" = "Unknown" ]; then
 	BIGICON="$IDAY0"
 	ECHO "**Big icon flipped to daily.**"
 fi
-
 if [ "$BIGICON" != "Unknown" ]; then
 	cd "$weatherdir"weathericons
 	ln -sf "$BIGICON""$NIGHTICON".png weather.png
@@ -742,8 +737,6 @@ if [ "$DATE" = "1101" ] || [ "$DATE" = "0718" ] || [ "$DATE" = "0705" ] || [ "$D
 fi
 	
 #Weather Warnings
-ECHO "**Checking for weather warnings.**"
-
 cd "$weatherdir"
 
 WARNING=" - "`echo "$WeatherData" | grep -m 3 '"alerts"' -A3 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
@@ -753,7 +746,7 @@ if [ "$WARNING" = " - Special Statement" ] || [ "$WARNING" = " - Special Weather
 	WARNING=" - "`echo "$WeatherData" | grep -m 2 '"alerts"' -A15 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
 fi
 
-#Check the string length of the warning. Less than 5 means garbage or no warning in string or we've failed over to the Special Statement string and it's not correct e.g. pases - KMSS.
+#Check the string length of the warning. Less than 5 means garbage or no warning in string or we've failed over to the Special Statement string and it's not correct e.g. passes - KMSS.
 l2=`echo $WARNING | wc -m`
 if [ "$l2" -lt "8" ]; then
 	WARNING=""
@@ -776,8 +769,8 @@ HISTORIC=`echo "$WeatherData" | grep -m 2 '"almanac": {' -A4 | tail -n1 | sed 's
 ECHO -n "$HISTORIC""&deg" > "$weatherdatadir"historic.txt
 
 #Save the newly created data as an image from the HTML.
-"$wkhtmltoimagedir"wkhtmltoimage --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
-"$wkhtmltoimagedir"wkhtmltoimage --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb$ZIPCODE.jpg
+"$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
+"$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb$ZIPCODE.jpg
 
 #Notification Center alert that we were successful.
 "$terminalnotifier"terminal-notifier.app/Contents/MacOS/terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg

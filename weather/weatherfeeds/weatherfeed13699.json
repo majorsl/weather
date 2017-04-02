@@ -50,45 +50,45 @@
 		"estimated": {
 		},
 		"station_id":"KNYPOTSD5",
-		"observation_time":"Last Updated on April 2, 10:48 AM EDT",
-		"observation_time_rfc822":"Sun, 02 Apr 2017 10:48:46 -0400",
-		"observation_epoch":"1491144526",
-		"local_time_rfc822":"Sun, 02 Apr 2017 11:03:32 -0400",
-		"local_epoch":"1491145412",
+		"observation_time":"Last Updated on April 2, 11:18 AM EDT",
+		"observation_time_rfc822":"Sun, 02 Apr 2017 11:18:48 -0400",
+		"observation_epoch":"1491146328",
+		"local_time_rfc822":"Sun, 02 Apr 2017 11:33:48 -0400",
+		"local_epoch":"1491147228",
 		"local_tz_short":"EDT",
 		"local_tz_long":"America/New_York",
 		"local_tz_offset":"-0400",
 		"weather":"Mostly Cloudy",
-		"temperature_string":"41.2 F (5.1 C)",
-		"temp_f":41.2,
-		"temp_c":5.1,
-		"relative_humidity":"75%",
-		"wind_string":"From the SW at 9.0 MPH Gusting to 12.0 MPH",
+		"temperature_string":"43.9 F (6.6 C)",
+		"temp_f":43.9,
+		"temp_c":6.6,
+		"relative_humidity":"71%",
+		"wind_string":"From the SW at 4.0 MPH Gusting to 9.0 MPH",
 		"wind_dir":"SW",
-		"wind_degrees":226,
-		"wind_mph":9.0,
-		"wind_gust_mph":"12.0",
-		"wind_kph":14.5,
-		"wind_gust_kph":"19.3",
+		"wind_degrees":230,
+		"wind_mph":4.0,
+		"wind_gust_mph":"9.0",
+		"wind_kph":6.4,
+		"wind_gust_kph":"14.5",
 		"pressure_mb":"1020",
 		"pressure_in":"30.11",
 		"pressure_trend":"-",
-		"dewpoint_string":"34 F (1 C)",
-		"dewpoint_f":34,
-		"dewpoint_c":1,
+		"dewpoint_string":"35 F (2 C)",
+		"dewpoint_f":35,
+		"dewpoint_c":2,
 		"heat_index_string":"NA",
 		"heat_index_f":"NA",
 		"heat_index_c":"NA",
-		"windchill_string":"36 F (2 C)",
-		"windchill_f":"36",
-		"windchill_c":"2",
-		"feelslike_string":"36 F (2 C)",
-		"feelslike_f":"36",
-		"feelslike_c":"2",
+		"windchill_string":"42 F (5 C)",
+		"windchill_f":"42",
+		"windchill_c":"5",
+		"feelslike_string":"42 F (5 C)",
+		"feelslike_f":"42",
+		"feelslike_c":"5",
 		"visibility_mi":"10.0",
 		"visibility_km":"16.1",
-		"solarradiation":"221",
-		"UV":"2.2","precip_1hr_string":"0.00 in ( 0 mm)",
+		"solarradiation":"733",
+		"UV":"4.4","precip_1hr_string":"0.00 in ( 0 mm)",
 		"precip_1hr_in":"0.00",
 		"precip_1hr_metric":" 0",
 		"precip_today_string":"0.00 in (0 mm)",
@@ -104,15 +104,15 @@
 		,
 	"forecast":{
 		"txt_forecast": {
-		"date":"10:02 AM EDT",
+		"date":"10:33 AM EDT",
 		"forecastday": [
 		{
 		"period":0,
 		"icon":"partlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/partlycloudy.gif",
 		"title":"Sunday",
-		"fcttext":"Cloudy skies early, followed by partial clearing. High 49F. Winds WNW at 10 to 15 mph.",
-		"fcttext_metric":"Cloudy early with peeks of sunshine expected late. High 9C. Winds WNW at 10 to 15 km/h.",
+		"fcttext":"Considerable clouds this morning. Some decrease in clouds later in the day. High 49F. Winds WNW at 10 to 15 mph.",
+		"fcttext_metric":"Mostly cloudy skies this morning will become partly cloudy this afternoon. High 9C. Winds WNW at 15 to 25 km/h.",
 		"pop":"0"
 		}
 		,
@@ -121,8 +121,8 @@
 		"icon":"nt_partlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_partlycloudy.gif",
 		"title":"Sunday Night",
-		"fcttext":"Partly cloudy skies. Low 27F. Winds SE at 5 to 10 mph.",
-		"fcttext_metric":"Partly cloudy skies. Low -2C. Winds ESE at 10 to 15 km/h.",
+		"fcttext":"A few clouds. Low 27F. Winds SE at 5 to 10 mph.",
+		"fcttext_metric":"A few clouds. Low -2C. Winds SE at 10 to 15 km/h.",
 		"pop":"10"
 		}
 		,
@@ -131,8 +131,8 @@
 		"icon":"partlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/partlycloudy.gif",
 		"title":"Monday",
-		"fcttext":"Partly cloudy. High 56F. Winds E at 5 to 10 mph.",
-		"fcttext_metric":"Sunshine and clouds mixed. High 13C. Winds light and variable.",
+		"fcttext":"Sunshine and clouds mixed. High 56F. Winds E at 5 to 10 mph.",
+		"fcttext_metric":"Partly cloudy skies. High 13C. Winds E at 10 to 15 km/h.",
 		"pop":"10"
 		}
 		,
@@ -141,8 +141,8 @@
 		"icon":"nt_rain",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_rain.gif",
 		"title":"Monday Night",
-		"fcttext":"Cloudy with occasional rain after midnight. Low 41F. Winds ESE at 10 to 15 mph. Chance of rain 100%. Rainfall around a quarter of an inch.",
-		"fcttext_metric":"Cloudy skies with periods of rain after midnight. Low around 5C. Winds ESE at 15 to 25 km/h. Chance of rain 100%. Rainfall around 6mm.",
+		"fcttext":"Cloudy with rain developing after midnight. Low 41F. Winds ESE at 10 to 15 mph. Chance of rain 100%. Rainfall near a quarter of an inch.",
+		"fcttext_metric":"Cloudy with occasional rain after midnight. Low near 5C. Winds ESE at 15 to 25 km/h. Chance of rain 100%. Rainfall around 6mm.",
 		"pop":"100"
 		}
 		,
@@ -151,8 +151,8 @@
 		"icon":"rain",
 		"icon_url":"http://icons.wxug.com/i/c/k/rain.gif",
 		"title":"Tuesday",
-		"fcttext":"Periods of rain. High 47F. Winds SE at 10 to 20 mph. Chance of rain 90%. Rainfall around a half an inch.",
-		"fcttext_metric":"Rain likely. High 8C. Winds SE at 15 to 30 km/h. Chance of rain 90%. Rainfall around 12mm.",
+		"fcttext":"Rain likely. High 47F. Winds SE at 10 to 20 mph. Chance of rain 90%. Rainfall near a half an inch.",
+		"fcttext_metric":"Periods of rain. High 8C. Winds SE at 15 to 30 km/h. Chance of rain 90%. Rainfall around 12mm.",
 		"pop":"90"
 		}
 		,
@@ -161,8 +161,8 @@
 		"icon":"nt_rain",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_rain.gif",
 		"title":"Tuesday Night",
-		"fcttext":"Periods of rain. Low near 35F. Winds SW at 10 to 15 mph. Chance of rain 90%. Rainfall around a quarter of an inch.",
-		"fcttext_metric":"Occasional rain. Low 1C. Winds SW at 15 to 25 km/h. Chance of rain 90%. Rainfall around 6mm.",
+		"fcttext":"Occasional rain. Low around 35F. Winds SW at 10 to 15 mph. Chance of rain 90%. Rainfall near a quarter of an inch.",
+		"fcttext_metric":"Cloudy with periods of rain. Low 1C. Winds SW at 15 to 25 km/h. Chance of rain 90%. Rainfall near 6mm.",
 		"pop":"90"
 		}
 		,
@@ -171,8 +171,8 @@
 		"icon":"partlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/partlycloudy.gif",
 		"title":"Wednesday",
-		"fcttext":"Cloudy skies early, followed by partial clearing. High 52F. Winds NW at 5 to 10 mph.",
-		"fcttext_metric":"Cloudy early with partial sunshine expected late. High 11C. Winds NW at 10 to 15 km/h.",
+		"fcttext":"Cloudy early with partial sunshine expected late. High 52F. Winds NW at 5 to 10 mph.",
+		"fcttext_metric":"Cloudy skies early, then partly cloudy in the afternoon. High 11C. Winds NW at 10 to 15 km/h.",
 		"pop":"20"
 		}
 		,
@@ -182,7 +182,7 @@
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_chancerain.gif",
 		"title":"Wednesday Night",
 		"fcttext":"Cloudy skies with a few showers later at night. Low 34F. Winds E at 5 to 10 mph. Chance of rain 30%.",
-		"fcttext_metric":"Cloudy during the evening. A few showers developing late. Low 2C. Winds E at 10 to 15 km/h. Chance of rain 30%.",
+		"fcttext_metric":"Cloudy during the evening. A few showers developing late. Low 1C. Winds E at 10 to 15 km/h. Chance of rain 30%.",
 		"pop":"30"
 		}
 		,
@@ -191,8 +191,8 @@
 		"icon":"rain",
 		"icon_url":"http://icons.wxug.com/i/c/k/rain.gif",
 		"title":"Thursday",
-		"fcttext":"Periods of rain. High 44F. Winds E at 10 to 15 mph. Chance of rain 90%. Rainfall around a half an inch.",
-		"fcttext_metric":"Rain. High 7C. Winds E at 15 to 25 km/h. Chance of rain 90%. Rainfall near 12mm.",
+		"fcttext":"Cloudy with periods of rain. High 44F. Winds E at 10 to 15 mph. Chance of rain 90%. Rainfall around a half an inch.",
+		"fcttext_metric":"Periods of rain. High 7C. Winds E at 15 to 25 km/h. Chance of rain 90%. Rainfall around 12mm.",
 		"pop":"90"
 		}
 		,
@@ -201,8 +201,8 @@
 		"icon":"nt_rain",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_rain.gif",
 		"title":"Thursday Night",
-		"fcttext":"Rain. Low near 35F. Winds ENE at 10 to 15 mph. Chance of rain 90%. Rainfall around a half an inch.",
-		"fcttext_metric":"Rain likely. Low 2C. Winds ENE at 15 to 25 km/h. Chance of rain 90%. Rainfall around 12mm.",
+		"fcttext":"Rain likely. Low near 35F. Winds ENE at 10 to 15 mph. Chance of rain 90%. Rainfall near a half an inch.",
+		"fcttext_metric":"Cloudy with periods of rain. Low 2C. Winds ENE at 15 to 25 km/h. Chance of rain 90%. Rainfall near 12mm.",
 		"pop":"90"
 		}
 		,
@@ -211,8 +211,8 @@
 		"icon":"chancerain",
 		"icon_url":"http://icons.wxug.com/i/c/k/chancerain.gif",
 		"title":"Friday",
-		"fcttext":"Overcast with rain showers at times. Temps nearly steady in the upper 30s. Winds NNE at 5 to 10 mph. Chance of rain 80%.",
-		"fcttext_metric":"Cloudy with occasional rain showers. High 4C. Winds NNE at 10 to 15 km/h. Chance of rain 80%.",
+		"fcttext":"Considerable cloudiness with occasional rain showers. Temps nearly steady in the upper 30s. Winds NNE at 5 to 10 mph. Chance of rain 80%.",
+		"fcttext_metric":"Considerable cloudiness with occasional rain showers. High 4C. Winds NNE at 10 to 15 km/h. Chance of rain 80%.",
 		"pop":"80"
 		}
 		,
@@ -222,7 +222,7 @@
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_snow.gif",
 		"title":"Friday Night",
 		"fcttext":"Periods of rain and snow. Low 33F. Winds light and variable. Chance of precip 60%.",
-		"fcttext_metric":"Cloudy with rain and snow. Low near 0C. Winds light and variable. Chance of precip 60%.",
+		"fcttext_metric":"Periods of rain and snow. Low 1C. Winds light and variable. Chance of precip 60%.",
 		"pop":"60"
 		}
 		,
@@ -231,7 +231,7 @@
 		"icon":"snow",
 		"icon_url":"http://icons.wxug.com/i/c/k/snow.gif",
 		"title":"Saturday",
-		"fcttext":"Rain and snow showers in the morning changing to mainly rain showers in the afternoon. High 42F. Winds NW at 5 to 10 mph. Chance of rain 60%.",
+		"fcttext":"Cloudy with rain and snow showers early changing to mainly rain showers in the afternoon. High 42F. Winds NW at 5 to 10 mph. Chance of rain 60%.",
 		"fcttext_metric":"Rain and snow showers in the morning. The rain and snow will change to rain showers in the afternoon. High 6C. Winds NW at 10 to 15 km/h. Chance of rain 60%.",
 		"pop":"60"
 		}
@@ -241,8 +241,8 @@
 		"icon":"nt_partlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_partlycloudy.gif",
 		"title":"Saturday Night",
-		"fcttext":"Cloudy skies early, then partly cloudy after midnight. Low 31F. Winds light and variable.",
-		"fcttext_metric":"Cloudy skies early, then partly cloudy after midnight. Low -1C. Winds light and variable.",
+		"fcttext":"Cloudy skies early will become partly cloudy later at night. Low 31F. Winds light and variable.",
+		"fcttext_metric":"Cloudy skies early, followed by partial clearing. Low near 0C. Winds light and variable.",
 		"pop":"20"
 		}
 		]
@@ -310,15 +310,15 @@
 		"mph": 15,
 		"kph": 24,
 		"dir": "WNW",
-		"degrees": 286
+		"degrees": 291
 		},
 		"avewind": {
 		"mph": 10,
 		"kph": 16,
 		"dir": "WNW",
-		"degrees": 286
+		"degrees": 291
 		},
-		"avehumidity": 55,
+		"avehumidity": 54,
 		"maxhumidity": 72,
 		"minhumidity": 45
 		}
@@ -579,7 +579,7 @@
 		"skyicon":"",
 		"pop":90,
 		"qpf_allday": {
-		"in": 1.21,
+		"in": 1.22,
 		"mm": 31
 		},
 		"qpf_day": {
@@ -587,7 +587,7 @@
 		"mm": 16
 		},
 		"qpf_night": {
-		"in": 0.58,
+		"in": 0.59,
 		"mm": 15
 		},
 		"snow_allday": {
@@ -775,24 +775,24 @@
 		"FCTTIME": {
 		"hour": "12","hour_padded": "12","min": "00","min_unpadded": "0","sec": "0","year": "2017","mon": "4","mon_padded": "04","mon_abbrev": "Apr","mday": "2","mday_padded": "02","yday": "91","isdst": "1","epoch": "1491148800","pretty": "12:00 PM EDT on April 02, 2017","civil": "12:00 PM","month_name": "April","month_name_abbrev": "Apr","weekday_name": "Sunday","weekday_name_night": "Sunday Night","weekday_name_abbrev": "Sun","weekday_name_unlang": "Sunday","weekday_name_night_unlang": "Sunday Night","ampm": "PM","tz": "","age": "","UTCDATE": ""
 		},
-		"temp": {"english": "44", "metric": "7"},
+		"temp": {"english": "45", "metric": "7"},
 		"dewpoint": {"english": "31", "metric": "-1"},
-		"condition": "Overcast",
-		"icon": "cloudy",
-		"icon_url":"http://icons.wxug.com/i/c/k/cloudy.gif",
-		"fctcode": "4",
-		"sky": "82",
-		"wspd": {"english": "9", "metric": "14"},
+		"condition": "Mostly Cloudy",
+		"icon": "mostlycloudy",
+		"icon_url":"http://icons.wxug.com/i/c/k/mostlycloudy.gif",
+		"fctcode": "3",
+		"sky": "71",
+		"wspd": {"english": "10", "metric": "16"},
 		"wdir": {"dir": "W", "degrees": "266"},
-		"wx": "Cloudy",
-		"uvi": "3",
-		"humidity": "60",
-		"windchill": {"english": "40", "metric": "4"},
+		"wx": "Mostly Cloudy",
+		"uvi": "4",
+		"humidity": "58",
+		"windchill": {"english": "39", "metric": "4"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
-		"feelslike": {"english": "40", "metric": "4"},
+		"feelslike": {"english": "39", "metric": "4"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "11",
+		"pop": "0",
 		"mslp": {"english": "30.1", "metric": "1019"}
 		}
 		,
@@ -800,24 +800,24 @@
 		"FCTTIME": {
 		"hour": "13","hour_padded": "13","min": "00","min_unpadded": "0","sec": "0","year": "2017","mon": "4","mon_padded": "04","mon_abbrev": "Apr","mday": "2","mday_padded": "02","yday": "91","isdst": "1","epoch": "1491152400","pretty": "1:00 PM EDT on April 02, 2017","civil": "1:00 PM","month_name": "April","month_name_abbrev": "Apr","weekday_name": "Sunday","weekday_name_night": "Sunday Night","weekday_name_abbrev": "Sun","weekday_name_unlang": "Sunday","weekday_name_night_unlang": "Sunday Night","ampm": "PM","tz": "","age": "","UTCDATE": ""
 		},
-		"temp": {"english": "46", "metric": "8"},
+		"temp": {"english": "47", "metric": "8"},
 		"dewpoint": {"english": "31", "metric": "-1"},
-		"condition": "Overcast",
-		"icon": "cloudy",
-		"icon_url":"http://icons.wxug.com/i/c/k/cloudy.gif",
-		"fctcode": "4",
-		"sky": "84",
+		"condition": "Mostly Cloudy",
+		"icon": "mostlycloudy",
+		"icon_url":"http://icons.wxug.com/i/c/k/mostlycloudy.gif",
+		"fctcode": "3",
+		"sky": "75",
 		"wspd": {"english": "10", "metric": "16"},
 		"wdir": {"dir": "W", "degrees": "276"},
-		"wx": "Cloudy",
-		"uvi": "3",
-		"humidity": "55",
+		"wx": "Mostly Cloudy",
+		"uvi": "4",
+		"humidity": "54",
 		"windchill": {"english": "42", "metric": "5"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
 		"feelslike": {"english": "42", "metric": "5"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "9",
+		"pop": "0",
 		"mslp": {"english": "30.1", "metric": "1019"}
 		}
 		,
@@ -825,24 +825,24 @@
 		"FCTTIME": {
 		"hour": "14","hour_padded": "14","min": "00","min_unpadded": "0","sec": "0","year": "2017","mon": "4","mon_padded": "04","mon_abbrev": "Apr","mday": "2","mday_padded": "02","yday": "91","isdst": "1","epoch": "1491156000","pretty": "2:00 PM EDT on April 02, 2017","civil": "2:00 PM","month_name": "April","month_name_abbrev": "Apr","weekday_name": "Sunday","weekday_name_night": "Sunday Night","weekday_name_abbrev": "Sun","weekday_name_unlang": "Sunday","weekday_name_night_unlang": "Sunday Night","ampm": "PM","tz": "","age": "","UTCDATE": ""
 		},
-		"temp": {"english": "47", "metric": "8"},
-		"dewpoint": {"english": "29", "metric": "-2"},
+		"temp": {"english": "48", "metric": "9"},
+		"dewpoint": {"english": "30", "metric": "-1"},
 		"condition": "Mostly Cloudy",
 		"icon": "mostlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/mostlycloudy.gif",
 		"fctcode": "3",
-		"sky": "69",
-		"wspd": {"english": "10", "metric": "16"},
+		"sky": "67",
+		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "WNW", "degrees": "288"},
 		"wx": "Mostly Cloudy",
 		"uvi": "4",
-		"humidity": "50",
-		"windchill": {"english": "42", "metric": "5"},
+		"humidity": "48",
+		"windchill": {"english": "-9999", "metric": "-9999"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
-		"feelslike": {"english": "42", "metric": "5"},
+		"feelslike": {"english": "48", "metric": "9"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "6",
+		"pop": "0",
 		"mslp": {"english": "30.09", "metric": "1019"}
 		}
 		,
@@ -867,7 +867,7 @@
 		"feelslike": {"english": "48", "metric": "9"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "0",
 		"mslp": {"english": "30.09", "metric": "1019"}
 		}
 		,
@@ -892,7 +892,7 @@
 		"feelslike": {"english": "48", "metric": "9"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "1",
 		"mslp": {"english": "30.08", "metric": "1019"}
 		}
 		,
@@ -917,7 +917,7 @@
 		"feelslike": {"english": "48", "metric": "9"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "2",
 		"mslp": {"english": "30.09", "metric": "1019"}
 		}
 		,
@@ -933,7 +933,7 @@
 		"fctcode": "2",
 		"sky": "47",
 		"wspd": {"english": "8", "metric": "13"},
-		"wdir": {"dir": "WNW", "degrees": "298"},
+		"wdir": {"dir": "WNW", "degrees": "300"},
 		"wx": "Partly Cloudy",
 		"uvi": "0",
 		"humidity": "46",
@@ -942,7 +942,7 @@
 		"feelslike": {"english": "42", "metric": "6"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "2",
 		"mslp": {"english": "30.09", "metric": "1019"}
 		}
 		,
@@ -1678,7 +1678,7 @@
 		"hemisphere":"North",
 		"current_time": {
 		"hour":"11",
-		"minute":"03"
+		"minute":"33"
 		},
 		"sunrise": {
 		"hour":"6",
