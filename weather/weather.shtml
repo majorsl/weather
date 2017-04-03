@@ -1,23 +1,23 @@
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"><link rel="stylesheet" href="weather.css" type="text/css"><link rel="stylesheet" href="weathermain.css" type="text/css"><style type="text/css" media="screen"></style>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"><link rel="stylesheet" href="css/weather.css" type="text/css"><link rel="stylesheet" href="css/weathermain.css" type="text/css"><style type="text/css" media="screen"></style>
 <div class="mainblock"></div>
 <div class="currenttemp">
-	<!--#include virtual="/weather/weatherdata/currenttemp.txt"-->
+	<!--#include virtual="weatherdata/currenttemp.txt"-->
 </div>
 <div class="feelslike">
-	<!--#include virtual="/weather/weatherdata/feelslike.txt"-->
+	<!--#include virtual="weatherdata/feelslike.txt"-->
 </div>
 <div class="historic">
-	Historically: <!--#include virtual="/weather/weatherdata/historic.txt"-->
+	Historically: <!--#include virtual="weatherdata/historic.txt"-->
 </div>
 <div class="currentcondition">
-	<!--#include virtual="/weather/weatherdata/currentcondition.txt"-->
+	<!--#include virtual="weatherdata/currentcondition.txt"-->
 </div>
 <div class="moonimage">
-	<img src="/weather/phase.png" alt="" border="0" /></div>
+	<img src="phase.png" alt="" border="0" /></div>
 <div class="eventimageabove">
-	<img src="/weather/images/eventabove.png" alt="" border="0" /></div>
+	<img src="images/eventabove.png" alt="" border="0" /></div>
 <div class="eventimagebelow">
-	<img src="/weather/images/eventbelow.png" alt="" border="0" /></div>
+	<img src="images/eventbelow.png" alt="" border="0" /></div>
 <div class="bottomgradient" /></div>
 <div class="tablez">
 <div class="tablespace"><br>
@@ -25,31 +25,31 @@
 <table width="99%" border="0" cellpadding="0" cellspacing="0" id="dayweather">
 <tr>
 		<td width="17%" height="63" align="center" valign="top" class="moonimagetd">
-					<div class="tablehead"><!--#include virtual="/weather/weatherdata/day0.txt"--><br></div>
+					<div class="tablehead"><!--#include virtual="weatherdata/day0.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/day0.png" border="0"><br>
 				</div>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday0.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday0.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday0.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday0.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid0.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop0.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid0.txt"--><span class="pop"><!--#include virtual="weatherdata/pop0.txt"--></span></div>
 	  		</td>
-		<td class="weathertd" align="center" valign="top" width="82%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/forecasttitle.txt"--> Outlook<span class="warning"><!--#include virtual="/weather/weatherdata/warning.txt"--></span></div>
+		<td class="weathertd" align="center" valign="top" width="82%"><div class="tablehead"><!--#include virtual="weatherdata/forecasttitle.txt"--> Outlook<span class="warning"><!--#include virtual="weatherdata/warning.txt"--></span></div>
 				<div class="forecastblock">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					  <tr>
-					    <td align="center" width="33%"><span class="currentcell"><img src="/weather/images/visibilityicon.png" alt="" border="0" />
-					      <!--#include virtual="/weather/weatherdata/visibilitynow.txt"-->
-				        Mi<br><img src="/weather/images/humidityicon.png" alt="" border="0" /><!--#include virtual="/weather/weatherdata/humiditynow.txt"--></span></td>
-					    <td align="center" width="33%"><span class="currentcell"><img src="/weather/images/windgust.png" alt="" border="0" /><!--#include virtual="/weather/weatherdata/windnow.txt"--></span></td>
-                        <td align="center" width="33%"><span class="currentcell"><img src="/weather/images/sunriseicon.png" alt="" border="0" />
-					      <!--#include virtual="/weather/weatherdata/sunrise.txt"--><br>
-					    <img src="/weather/images/sunseticon.png" alt="" border="0" /> <!--#include virtual="/weather/weatherdata/sunset.txt"--></td>
+					    <td align="center" width="33%"><span class="currentcell"><img src="images/visibilityicon.png" alt="" border="0" />
+					      <!--#include virtual="weatherdata/visibilitynow.txt"-->
+				        Mi<br><img src="images/humidityicon.png" alt="" border="0" /><!--#include virtual="weatherdata/humiditynow.txt"--></span></td>
+					    <td align="center" width="33%"><span class="currentcell"><img src="images/windgust.png" alt="" border="0" /><!--#include virtual="weatherdata/windnow.txt"--></span></td>
+                        <td align="center" width="33%"><span class="currentcell"><img src="images/sunriseicon.png" alt="" border="0" />
+					      <!--#include virtual="weatherdata/sunrise.txt"--><br>
+					    <img src="images/sunseticon.png" alt="" border="0" /> <!--#include virtual="weatherdata/sunset.txt"--></td>
 				      </tr>
 				  </table>
 		  </div>
 					<div class="tablehead"></div>
 				<div class="forecast">
-					<!--#include virtual="/weather/weatherdata/forecasttoday.txt"-->
+					<!--#include virtual="weatherdata/forecasttoday.txt"-->
 				</div>
 	</td>
 	  </tr>
@@ -57,67 +57,67 @@
 <table height="61" width="99%" border="0" cellpadding="0" cellspacing="0" id="dayweather">
 <tr>
 		<td align="center" valign="top" class="moonimagetd0 width="15%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour0.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour0.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour0.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour0.txt"-->
+					<!--#include virtual="weatherdata/temphour0.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd1 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour1.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour1.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour1.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour1.txt"-->
+					<!--#include virtual="weatherdata/temphour1.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd2 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour2.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour2.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour2.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour2.txt"-->
+					<!--#include virtual="weatherdata/temphour2.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd3 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour3.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour3.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour3.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour3.txt"-->
+					<!--#include virtual="weatherdata/temphour3.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd4 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour4.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour4.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour4.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour4.txt"-->
+					<!--#include virtual="weatherdata/temphour4.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd5 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour5.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour5.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour5.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour5.txt"-->
+					<!--#include virtual="weatherdata/temphour5.txt"-->
 				</div>
         </td>
 		<td align="center" valign="top" class="moonimagetd6 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour6.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour6.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour6.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour6.txt"-->
+					<!--#include virtual="weatherdata/temphour6.txt"-->
 				</div>
         </td>
         <td align="center" valign="top" class="moonimagetd7 width="13%">
-					<div class="tabletimehead"><!--#include virtual="/weather/weatherdata/hour7.txt"--><br></div>
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour7.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour7.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
-					<!--#include virtual="/weather/weatherdata/temphour7.txt"-->
+					<!--#include virtual="weatherdata/temphour7.txt"-->
 				</div>
         </td>
 	  </tr>
@@ -125,49 +125,49 @@
 <table width="99%" border="0" cellpadding="0" cellspacing="0" id="dayweather">
 <tr>
 		<td height="63" align="center" valign="top" width="16%">
-					<div class="tablehead"><!--#include virtual="/weather/weatherdata/day1.txt"--><br></div>
+					<div class="tablehead"><!--#include virtual="weatherdata/day1.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/day1.png" border="0"><br>
 				</div>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday1.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday1.txt"--></span>
+					<!--#include virtual="weatherdata/highday1.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday1.txt"--></span>
 				</div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid1.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop1.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid1.txt"--><span class="pop"><!--#include virtual="weatherdata/pop1.txt"--></span></div>
                 </td>
-		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/day2.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="weatherdata/day2.txt"--><br></div>
 				<img src="weathericonssm/day2.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday2.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday2.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday2.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday2.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid2.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop2.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid2.txt"--><span class="pop"><!--#include virtual="weatherdata/pop2.txt"--></span></div>
                 </td>
-		<td class="weathertd" align="center" valign="top" width="17%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/day3.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="17%"><div class="tablehead"><!--#include virtual="weatherdata/day3.txt"--><br></div>
 				<img src="weathericonssm/day3.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday3.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday3.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday3.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday3.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid3.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop3.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid3.txt"--><span class="pop"><!--#include virtual="weatherdata/pop3.txt"--></span></div>
 				</td>
-		<td class="weathertd" align="center" valign="top" width="17%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/day4.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="17%"><div class="tablehead"><!--#include virtual="weatherdata/day4.txt"--><br></div>
 				<img src="weathericonssm/day4.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday4.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday4.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday4.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday4.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid4.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop4.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid4.txt"--><span class="pop"><!--#include virtual="weatherdata/pop4.txt"--></span></div>
 				</td>
-		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/day5.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="weatherdata/day5.txt"--><br></div>
 				<img src="weathericonssm/day5.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday5.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday5.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday5.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday5.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid5.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop5.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid5.txt"--><span class="pop"><!--#include virtual="weatherdata/pop5.txt"--></span></div>
 				</td>
-		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="/weather/weatherdata/day6.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="16%"><div class="tablehead"><!--#include virtual="weatherdata/day6.txt"--><br></div>
 				<img src="weathericonssm/day6.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday6.txt"--><span class="lows"><!--#include virtual="/weather/weatherdata/lowday6.txt"--></span></div>
+					<!--#include virtual="weatherdata/highday6.txt"--><span class="lows"><!--#include virtual="weatherdata/lowday6.txt"--></span></div>
 				<div class="humid">
-					<!--#include virtual="/weather/weatherdata/humid6.txt"--><span class="pop"><!--#include virtual="/weather/weatherdata/pop6.txt"--></span></div>
+					<!--#include virtual="weatherdata/humid6.txt"--><span class="pop"><!--#include virtual="weatherdata/pop6.txt"--></span></div>
 				</td>
 	  </tr>
 	</table>

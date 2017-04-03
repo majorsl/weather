@@ -1,71 +1,71 @@
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"><link rel="stylesheet" href="blogweather.css" type="text/css"><link rel="stylesheet" href="blogweathermain.css" type="text/css"><style type="text/css" media="screen"></style>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"><link rel="stylesheet" href="css/blogweather.css" type="text/css"><link rel="stylesheet" href="css/blogweathermain.css" type="text/css"><style type="text/css" media="screen"></style>
 <div class="mainblock">
 <div class="topgradient" /></div>
 <div class="currenttemp">
-	<!--#include virtual="/weather/weatherdata/currenttemp.txt"-->
+	<!--#include virtual="weatherdata/currenttemp.txt"-->
 </div>
 <div class="feelslike">
-	<!--#include virtual="/weather/weatherdata/feelslike.txt"-->
+	<!--#include virtual="weatherdata/feelslike.txt"-->
 </div>
 <div class="historic">
-	Historically: <!--#include virtual="/weather/weatherdata/historic.txt"-->
+	Historically: <!--#include virtual="weatherdata/historic.txt"-->
 </div>
 <div class="currentcondition">
-	<!--#include virtual="/weather/weatherdata/currentcondition.txt"-->
+	<!--#include virtual="weatherdata/currentcondition.txt"-->
 </div>
 <div class="warning">
-	<!--#include virtual="/weather/weatherdata/warning.txt"-->
+	<!--#include virtual="weatherdata/warning.txt"-->
 </div>
 <div class="moonimage">
-	<img src="/weather/phase.png" alt="" border="0" /></div>
+	<img src="phase.png" alt="" border="0" /></div>
 <div class="eventimageabove">
-	<img src="/weather/images/eventabove.png" alt="" border="0" /></div>
+	<img src="images/eventabove.png" alt="" border="0" /></div>
 <div class="eventimagebelow">
-	<img src="/weather/images/eventbelow.png" alt="" border="0" /></div>
+	<img src="images/eventbelow.png" alt="" border="0" /></div>
 <div class="bottomgradient" /></div>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tablez" id="dayweather">
 <tr>
 		<td width="20%" height="63" align="center" valign="top" class="moonimagetd">
-					<div class="days"><!--#include virtual="/weather/weatherdata/day0.txt"--><br></div>
+					<div class="days"><!--#include virtual="weatherdata/day0.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/day0.png" border="0"><br>
 				</div>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday0.txt"-->
+					<!--#include virtual="weatherdata/highday0.txt"-->
 				</div>
 				<div class="lows">
-					<!--#include virtual="/weather/weatherdata/lowday0.txt"-->
+					<!--#include virtual="weatherdata/lowday0.txt"-->
 	  </div>		</td>
-		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="/weather/weatherdata/day1.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="weatherdata/day1.txt"--><br></div>
 				<img src="weathericonssm/day1.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday1.txt"-->
+					<!--#include virtual="weatherdata/highday1.txt"-->
 				</div>
 				<div class="lows">
-					<!--#include virtual="/weather/weatherdata/lowday1.txt"-->
+					<!--#include virtual="weatherdata/lowday1.txt"-->
 				</div>			</td>
-		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="/weather/weatherdata/day2.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="weatherdata/day2.txt"--><br></div>
 				<img src="weathericonssm/day2.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday2.txt"-->
+					<!--#include virtual="weatherdata/highday2.txt"-->
 				</div>
 				<div class="lows">
-					<!--#include virtual="/weather/weatherdata/lowday2.txt"-->
+					<!--#include virtual="weatherdata/lowday2.txt"-->
 				</div>			</td>
-		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="/weather/weatherdata/day3.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="weatherdata/day3.txt"--><br></div>
 				<img src="weathericonssm/day3.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday3.txt"-->
+					<!--#include virtual="weatherdata/highday3.txt"-->
 				</div>
 				<div class="lows">
-					<!--#include virtual="/weather/weatherdata/lowday3.txt"-->
+					<!--#include virtual="weatherdata/lowday3.txt"-->
 				</div>			</td>
-		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="/weather/weatherdata/day4.txt"--><br></div>
+		<td class="weathertd" align="center" valign="top" width="20%"><div class="days"><!--#include virtual="weatherdata/day4.txt"--><br></div>
 				<img src="weathericonssm/day4.png" border="0"><br>
 				<div class="highs">
-					<!--#include virtual="/weather/weatherdata/highday4.txt"-->
+					<!--#include virtual="weatherdata/highday4.txt"-->
 				</div>
 				<div class="lows">
-					<!--#include virtual="/weather/weatherdata/lowday4.txt"-->
+					<!--#include virtual="weatherdata/lowday4.txt"-->
 				</div></td>
 	  </tr>
 	</table>

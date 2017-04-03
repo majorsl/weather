@@ -1,5 +1,5 @@
 #!/bin/sh
-#version 3.1.1
+#version 3.1.2
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -9,6 +9,7 @@ weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script
 weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/" #temp storage of weather feeds.
 weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/" #where the output txt files for the html goes.
 weatherimagedir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherimages/" #location of weather widgets.
+weathercssdir="/users/majorsl/Scripts/GitHub/weather/weather/css/" #location of css files.
 wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
 wgetdir="/usr/local/bin/" #location of wget binary.
 wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt" #location of your wunderground api.
@@ -162,7 +163,7 @@ TODAYUV=`echo "$WeatherData" | grep -e '"UV"' | sed 's/.*\:"//' | cut -d '"' -f1
 #Offset is the number of lines for data between days. When the source adds new items, this increases on occasion. IPOINT is the first day line number to start the offset.
 OFFSET=74
 
-#Mini Icon Names
+#7 day forecast items.
 IPOINT=29
 IDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
 let IPOINT=$IPOINT+$OFFSET
@@ -442,7 +443,7 @@ fi
 declare -a HOURS
 HOURS=( $HOUR0  $HOUR1 $HOUR2 $HOUR3 $HOUR4 $HOUR5 $HOUR6 $HOUR7 $HOUR8 $HOUR9 )
 
-#Sort out am/pm for each hour.
+#Sort out am/pm for each hour - HOURS0-9
 x=0
 while [ $x -lt 10 ]
 do
@@ -461,7 +462,7 @@ fi
 let x=$x+1
 done
 
-#Hour Temps
+#Hour Temps - TEMPHOUR0-9
 IPOINT=5
 TEMPHOUR0=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
 let IPOINT=$IPOINT+$OFFSET2
@@ -514,14 +515,14 @@ DAYNIGHT="weatherblue.css"
 SUNSETPLUSONE=`expr $SUNSETMIL + "100"`
 SUNRISEMINUSONE=`expr $SUNRISENUM - "100"`
 
-#Lets try a grey background for overcast/fog days at daytime.
+#Grey background for overcast/fog days at daytime.
 if [ "$CURRENTCOND" = "Overcast" ]; then
 	DAYNIGHT="weathergrey.css"
 	DAYNIGHTSIG="blogweathergrey.css"
 fi
 if [ "$CURRENTCOND" = "Fog" ]; then
 	DAYNIGHT="weathergrey.css"
-	DAYNIGHTSIG="blogweathergrey.css"
+	DAYNIGHTSIG="$weathercssdir""blogweathergrey.css"
 fi
 
 if [ "$CURRENTCOND" = "Clear" ]; then
@@ -554,7 +555,7 @@ if [ "$TIME" -lt "$SUNRISEMINUSONE" ]; then
 fi
 
 #Output for css customization
-cd "$weatherdir"
+cd "$weathercssdir"
 ln -sf "$DAYNIGHT" weather.css
 ln -sf "$DAYNIGHTSIG" blogweather.css
 
@@ -605,10 +606,10 @@ if [ "$TODAYVIS" != "N/A" ]; then
 fi
 ECHO -n "$TODAYUV" > "$weatherdatadir"uvnow.txt
 ECHO -n "$WINDNOW" > "$weatherdatadir"windnow.txt
-#ECHO -n "$DAYGUST" > "$weatherdatadir"windgustnow.txt
+#ECHO -n "$DAYGUST" > "$weatherdatadir"windgustnow.txt #not currently using this in any display.
 ECHO -n "$SUNRISE" > "$weatherdatadir"sunrise.txt
 ECHO -n "$SUNSET" > "$weatherdatadir"sunset.txt
-#ECHO -n "$MOONPHASE" > "$weatherdatadir"moonphase.txt
+#ECHO -n "$MOONPHASE" > "$weatherdatadir"moonphase.txt #not currently using this in any display.
 
 ECHO -n "$DDAY0" > "$weatherdatadir"day0.txt
 ECHO -n "$DDAY1" > "$weatherdatadir"day1.txt
@@ -765,7 +766,8 @@ if [ "$DATE" = "1101" ] || [ "$DATE" = "0718" ] || [ "$DATE" = "0705" ] || [ "$D
 	ln -sf empty.png eventbelow.png
 fi
 
-#Save the newly created data as an image from the HTML.
+#Save the newly created data as an image from the HTML, but pause just a bit in case file system is still updating.
+sleep 5
 "$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
 "$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb$ZIPCODE.jpg
 
