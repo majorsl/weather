@@ -58,7 +58,7 @@
 <tr>
 		<td align="center" valign="top" class="moonimagetd0 width="15%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour0.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour0.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour1.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour0.txt"-->
@@ -66,7 +66,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd1 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour1.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour1.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour2.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour1.txt"-->
@@ -74,7 +74,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd2 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour2.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour2.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour3.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour2.txt"-->
@@ -82,7 +82,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd3 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour3.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour3.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour4.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour3.txt"-->
@@ -90,7 +90,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd4 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour4.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour4.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour5.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour4.txt"-->
@@ -98,7 +98,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd5 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour5.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour5.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour6.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour5.txt"-->
@@ -106,7 +106,7 @@
         </td>
 		<td align="center" valign="top" class="moonimagetd6 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour6.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour6.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour7.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour6.txt"-->
@@ -114,7 +114,7 @@
         </td>
         <td align="center" valign="top" class="moonimagetd7 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour7.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour7.png" width=30 height=27 border="0"><br>
+					<div align="center"><img src="weathericonssm/iconhour8.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour7.txt"-->

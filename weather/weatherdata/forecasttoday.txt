@@ -1,1 +1,1 @@
-<div class="forecast2">Showers this evening becoming a steady rain overnight. Low 42F. Winds E at 10 to 15mph. Chance of rain 100%. Rainfall near a quarter of an inch.</div>
+<div class="forecast2">Rain and snow this evening then remaining overcast overnight. Low 27F. Winds WNW at 10 to 20mph. Chance of precip 90%.</div>
