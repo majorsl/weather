@@ -56,7 +56,15 @@
 	</table>
 <table height="61" width="99%" border="0" cellpadding="0" cellspacing="0" id="dayweather">
 <tr>
-		<td align="center" valign="top" class="moonimagetd1 width="15%">
+		<td align="center" valign="top" class="moonimagetd0 width="15%">
+					<div class="tabletimehead"><!--#include virtual="weatherdata/hour0.txt"--><br></div>
+					<div align="center"><img src="weathericonssm/iconhour0.png" width=30 height=27 border="0"><br>
+				</div>
+				<div class="timehighs">
+					<!--#include virtual="weatherdata/temphour0.txt"-->
+				</div>
+        </td>
+		<td align="center" valign="top" class="moonimagetd1 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour1.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour1.png" width=30 height=27 border="0"><br>
 				</div>
@@ -104,20 +112,12 @@
 					<!--#include virtual="weatherdata/temphour6.txt"-->
 				</div>
         </td>
-		<td align="center" valign="top" class="moonimagetd7 width="13%">
+        <td align="center" valign="top" class="moonimagetd7 width="13%">
 					<div class="tabletimehead"><!--#include virtual="weatherdata/hour7.txt"--><br></div>
 					<div align="center"><img src="weathericonssm/iconhour7.png" width=30 height=27 border="0"><br>
 				</div>
 				<div class="timehighs">
 					<!--#include virtual="weatherdata/temphour7.txt"-->
-				</div>
-        </td>
-        <td align="center" valign="top" class="moonimagetd8 width="13%">
-					<div class="tabletimehead"><!--#include virtual="weatherdata/hour8.txt"--><br></div>
-					<div align="center"><img src="weathericonssm/iconhour8.png" width=30 height=27 border="0"><br>
-				</div>
-				<div class="timehighs">
-					<!--#include virtual="weatherdata/temphour8.txt"-->
 				</div>
         </td>
 	  </tr>
