@@ -1,5 +1,5 @@
-#!/bin/sh
-#version 3.2
+#!/usr/bin/env bash
+#version 3.2.1
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -27,16 +27,16 @@ for ZIPCODE in "${arr[@]}"
 do
 
 #Get time for sunrise/set comparison and date for special icons.
-TIME=`date +%H%M`
-DATE=`date +%m%d`
+TIME=$(date +%H%M)
+DATE=$(date +%m%d)
 
 #Get data from wunderground.com.
 API=$(cat "$wundergroundapi")
-cd "$weatherfeeddir"
+cd "$weatherfeeddir" || exit
 "$wgetdir"wget -O weatherfeed$ZIPCODE.json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
 
 #Check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
-SIZE=`ls -s weatherfeed$ZIPCODE.json | cut -d " " -f1`
+SIZE=$(ls -s weatherfeed"$ZIPCODE".json | cut -d " " -f1)
 if [ "$SIZE" -lt "9" ]; then
 	echo "**$ZIPCODE - Bad weather data or no network connection. Will try again at next interval.**"
 	"$terminalnotifier"terminal-notifier -title 'Weather Update' -message "$ZIPCODE Failed. Bad calendar data or no network connection. Will try again at next interval." -contentImage /Users/majorsl/Sites/weather/weatherimages/weather"$ZIPCODE".jpg terminal-notifier -sender com.apple.Terminal -activate -open https://www.wunderground.com/ -timeout 10
@@ -49,21 +49,21 @@ fi
 #Load weather data to single variable.
 WeatherFile="weatherfeed$ZIPCODE.json"
 WeatherData=""
-WeatherData=`cat $WeatherFile`
+WeatherData=$(cat "$WeatherFile")
 
 #Change to weather directory and extract data.
-cd "$weatherdir"
+cd "$weatherdir" || exit
 
 #Current Conditions/Temp - round current temp to nearest int with awk. Pretty current condition. Make hyphen nowrap character &#8209;
-CURRENTCOND=`echo "$WeatherData" | grep -e '"weather"' | sed 's/.*\:"//' | cut -d '"' -f1 | sed 's/and/\&/'`
-CURRENTTEMP=`echo "$WeatherData" | grep -e '"temp_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/$//' | awk '{print int($1+0.5)}'`
+CURRENTCOND=$(echo "$WeatherData" | grep -e '"weather"' | sed 's/.*\:"//' | cut -d '"' -f1 | sed 's/and/\&/')
+CURRENTTEMP=$(echo "$WeatherData" | grep -e '"temp_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/$//' | awk '{print int($1+0.5)}')
 if [ "$CURRENTTEMP" = "-0" ]; then
 	CURRENTTEMP="0"
 fi
-CURRENTTEMP=`echo "$CURRENTTEMP" | sed 's/-/\&#8209;/'`
+CURRENTTEMP=$(echo "$CURRENTTEMP" | sed 's/-/\&#8209;/')
 
 #Output Conditions & Pretty up some strings without altering original data. There is an Unknown that pops-up sometimes. This keeps the last set until it goes away.
-CURRENTCONDITIONPRETTY=`echo $CURRENTCOND | sed 's/ mist/ \& mist/' | sed 's/ fog/ \& fog/'`
+CURRENTCONDITIONPRETTY=$(echo "$CURRENTCOND" | sed 's/ mist/ \& mist/' | sed 's/ fog/ \& fog/')
 
 if [ "$CURRENTCONDITIONPRETTY" != "Unknown" ] || [ "$CURRENTCONDITIONPRETTY" != "" ]; then
 		ECHO "$CURRENTTEMP&deg" > "$weatherdatadir"currenttemp.txt
@@ -71,12 +71,12 @@ if [ "$CURRENTCONDITIONPRETTY" != "Unknown" ] || [ "$CURRENTCONDITIONPRETTY" != 
 fi
 
 #Almanac what is the historic average temp
-HISTORIC=`echo "$WeatherData" | grep -m 2 '"almanac": {' -A4 | tail -n1 | sed 's/.*\: "//' | cut -d '"' -f1`
+HISTORIC=$(echo "$WeatherData" | grep -m 2 '"almanac": {' -A4 | tail -n1 | sed 's/.*\: "//' | cut -d '"' -f1)
 ECHO -n "$HISTORIC""&deg" > "$weatherdatadir"historic.txt
 
 #Feels Like: First, look for windchill and use that, then heat index and use that, then current temp.
-WINDCHILL=`echo "$WeatherData" | grep -e '"windchill_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g'`
-HEATINDEX=`echo "$WeatherData" | grep -e '"heat_index_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g'`
+WINDCHILL=$(echo "$WeatherData" | grep -e '"windchill_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g')
+HEATINDEX=$(echo "$WeatherData" | grep -e '"heat_index_f"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g')
 
 FEELLIKE="$CURRENTTEMP"
 if [ "$WINDCHILL" != "NA" ]; then
@@ -99,19 +99,19 @@ fi
 ECHO "$FEELCOLOR""Feels Like: ""$FEELLIKE""&deg""$FEELCOLOR2" > "$weatherdatadir"feelslike.txt
 
 #Moon
-MOONICON=`echo "$WeatherData" | grep -e '"ageOfMoon"' | sed 's/.*\:"//' | cut -d '"' -f1 | sed 's/and/\&/'`
+MOONICON=$(echo "$WeatherData" | grep -e '"ageOfMoon"' | sed 's/.*\:"//' | cut -d '"' -f1 | sed 's/and/\&/')
 
 #Sunrise/Set
-SUNSETHR=`echo "$WeatherData" | grep -e '"sunset"' -A1 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-SUNSETHRSTD=`expr $SUNSETHR - "12"`
-SUNSETMIN=`echo "$WeatherData" | grep -e '"sunset"' -A2 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+SUNSETHR=$(echo "$WeatherData" | grep -e '"sunset"' -A1 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+SUNSETHRSTD=$(expr "$SUNSETHR" - "12")
+SUNSETMIN=$(echo "$WeatherData" | grep -e '"sunset"' -A2 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 SUNSET="$SUNSETHRSTD:$SUNSETMIN PM"
 
-SUNRISEHR=`echo "$WeatherData" | grep -e '"sunrise"' -A1 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-SUNRISEMIN=`echo "$WeatherData" | grep -e '"sunrise"' -A2 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+SUNRISEHR=$(echo "$WeatherData" | grep -e '"sunrise"' -A1 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+SUNRISEMIN=$(echo "$WeatherData" | grep -e '"sunrise"' -A2 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 SUNRISE="$SUNRISEHR:$SUNRISEMIN AM"
 
-SUNSETNUM=`echo $SUNSET | sed -e 's/://' | cut -d " " -f1`
+SUNSETNUM=$(echo "$SUNSET" | sed -e 's/://' | cut -d " " -f1)
 SUNSETMIL="$SUNSETHR$SUNSETMIN"
 SUNRISENUM="$SUNRISEHR$SUNRISEMIN"
 
@@ -123,15 +123,15 @@ fi
 
 #Forcast & character count for smaller font. NA determines Forecast data, switching to night forecast afer 2pm.
 PERIOD=0
-FORECASTTITLE=`echo "$WeatherData" | grep -m 2 '"period":0' -A3 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1`
-FORECAST=`echo "$WeatherData" | grep -m 2 '"period":0' -A4 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1 | sed 's/ percent/%/' | sed 's/thunderstorm/Tstorm/g' | sed 's/ mph/mph/g' | sed 's/rainfall/rain/g' | sed 's/southwest/SW/g' | sed 's/Southwest/SW/g' |sed 's/southeast/SE/g' | sed 's/northwest/NW/g' | sed 's/Northwest/NW/g' | sed 's/northeast/NE/g' | sed 's/midnight/12/g' | sed 's/with gusts up to/gusting to/g' | sed 's/Gusts up to/Gusts to/g' | sed 's/Northeast/NE/g' | sed 's/Southeast/SE/g' | sed 's/zero/0/g'`
+FORECASTTITLE=$(echo "$WeatherData" | grep -m 2 '"period":0' -A3 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1)
+FORECAST=$(echo "$WeatherData" | grep -m 2 '"period":0' -A4 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1 | sed 's/ percent/%/' | sed 's/thunderstorm/Tstorm/g' | sed 's/ mph/mph/g' | sed 's/rainfall/rain/g' | sed 's/southwest/SW/g' | sed 's/Southwest/SW/g' |sed 's/southeast/SE/g' | sed 's/northwest/NW/g' | sed 's/Northwest/NW/g' | sed 's/northeast/NE/g' | sed 's/midnight/12/g' | sed 's/with gusts up to/gusting to/g' | sed 's/Gusts up to/Gusts to/g' | sed 's/Northeast/NE/g' | sed 's/Southeast/SE/g' | sed 's/zero/0/g')
 if [ "$NA" = "NAFound" ]; then
 	PERIOD=1
-	FORECASTTITLE=`echo "$WeatherData" | grep -m 2 '"forecast":{' -A 18 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1`
-	FORECAST=`echo "$WeatherData" | grep -m 2 '"forecast":{' -A 19 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1 | sed 's/ percent/%/' | sed 's/thunderstorm/Tstorm/g' | sed 's/ mph/mph/g' | sed 's/rainfall/rain/g' | sed 's/southwest/SW/g' | sed 's/Southwest/SW/g' |sed 's/southeast/SE/g' | sed 's/northwest/NW/g' | sed 's/Northwest/NW/g' | sed 's/northeast/NE/g' | sed 's/midnight/12/g' | sed 's/with gusts up to/gusting to/g' | sed 's/Gusts up to/Gusts to/g' | sed 's/Northeast/NE/g' | sed 's/Southeast/SE/g' | sed 's/zero/0/g'`
+	FORECASTTITLE=$(echo "$WeatherData" | grep -m 2 '"forecast":{' -A 18 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1)
+	FORECAST=$(echo "$WeatherData" | grep -m 2 '"forecast":{' -A 19 | sed 's/.*\:"//' | tail -n 1 | cut -d '"' -f1 | sed 's/ percent/%/' | sed 's/thunderstorm/Tstorm/g' | sed 's/ mph/mph/g' | sed 's/rainfall/rain/g' | sed 's/southwest/SW/g' | sed 's/Southwest/SW/g' |sed 's/southeast/SE/g' | sed 's/northwest/NW/g' | sed 's/Northwest/NW/g' | sed 's/northeast/NE/g' | sed 's/midnight/12/g' | sed 's/with gusts up to/gusting to/g' | sed 's/Gusts up to/Gusts to/g' | sed 's/Northeast/NE/g' | sed 's/Southeast/SE/g' | sed 's/zero/0/g')
 fi
 
-l2=`echo $FORECAST | wc -m | tr -d ' '`
+l2=$(echo "$FORECAST" | wc -m | tr -d ' ')
 #error out if little or no forecast data, probably a malformed json file. Else, adjust forcast font size.
 if [ "$l2" -lt "10" ]; then
 	echo "**$ZIPCODE - Bad weather data or no network connection. Will try again at next interval.**"
@@ -152,13 +152,13 @@ if [ "$TIME" -gt "$SUNSETMIL" ] || [ "$TIME" -lt "$SUNRISENUM" ]; then
 fi
 
 #Humidity
-TODAYHUMID=`echo "$WeatherData" | grep -e '"relative_humidity"' | sed 's/.*\:"//' | cut -d '%' -f1`
+TODAYHUMID=$(echo "$WeatherData" | grep -e '"relative_humidity"' | sed 's/.*\:"//' | cut -d '%' -f1)
 
 #Visibility
-TODAYVIS=`echo "$WeatherData" | grep -e '"visibility_mi"' | sed 's/.*\:"//' | cut -d '"' -f1`
+TODAYVIS=$(echo "$WeatherData" | grep -e '"visibility_mi"' | sed 's/.*\:"//' | cut -d '"' -f1)
 
 #UV
-TODAYUV=`echo "$WeatherData" | grep -e '"UV"' | sed 's/.*\:"//' | cut -d '"' -f1`
+TODAYUV=$(echo "$WeatherData" | grep -e '"UV"' | sed 's/.*\:"//' | cut -d '"' -f1)
 
 #Offset is the number of lines for data between days. When the source adds new items, this increases on occasion. IPOINT is the first day line number to start the offset.
 OFFSET=74
@@ -167,7 +167,7 @@ OFFSET=74
 IPOINT=29
 IDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
 let IPOINT=$IPOINT+$OFFSET
-IDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+IDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 let IPOINT=$IPOINT+$OFFSET
 IDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
 let IPOINT=$IPOINT+$OFFSET
@@ -341,7 +341,7 @@ OFFSET2=25
 
 #Hour
 IPOINT=3
-HOUR0=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR0=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR0MIL="$HOUR0""00"
 NIGHTICON0=""
 MOONTIME0="empty"
@@ -351,7 +351,7 @@ if [ "$HOUR0MIL" -gt "$SUNSETMIL" ] || [ "$HOUR0MIL" -lt "$SUNRISENUM" ]; then
 fi
 let IPOINT=$IPOINT+$OFFSET2
 #
-HOUR1=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR1=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR1MIL="$HOUR1""00"
 NIGHTICON1=""
 MOONTIME1="empty"
@@ -361,7 +361,7 @@ if [ "$HOUR1MIL" -gt "$SUNSETMIL" ] || [ "$HOUR1MIL" -lt "$SUNRISENUM" ]; then
 fi
 let IPOINT=$IPOINT+$OFFSET2
 #
-HOUR2=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR2=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR2MIL="$HOUR2""00"
 NIGHTICON2=""
 MOONTIME2="empty"
@@ -512,8 +512,8 @@ DAYNIGHTSIG="blogweatherblue.css"
 DAYNIGHT="weatherblue.css"
 
 #Time variables for backgrounds
-SUNSETPLUSONE=`expr $SUNSETMIL + "100"`
-SUNRISEMINUSONE=`expr $SUNRISENUM - "100"`
+SUNSETPLUSONE=$(expr $SUNSETMIL + "100")
+SUNRISEMINUSONE=$(expr $SUNRISENUM - "100")
 
 #Grey background for overcast/fog days at daytime.
 if [ "$CURRENTCOND" = "Overcast" ]; then
@@ -555,12 +555,12 @@ if [ "$TIME" -lt "$SUNRISEMINUSONE" ]; then
 fi
 
 #Output for css customization
-cd "$weathercssdir"
+cd "$weathercssdir" || exit
 ln -sf "$DAYNIGHT" weather.css
 ln -sf "$DAYNIGHTSIG" blogweather.css
 
 #Output Text Data
-cd "$weatherdir"
+cd "$weatherdir" || exit
 
 #Highs - From up top, if != NAFound then we're NOT after 2pm and retain the high today number.  Else, see below.
 if [ "$NA" != "NAFound" ]; then
@@ -640,7 +640,7 @@ ECHO -n "&#8776;""$HUDAY5" > "$weatherdatadir"humid5.txt
 ECHO -n "&#8776;""$HUDAY6" > "$weatherdatadir"humid6.txt
 
 #Set small weather icons.
-cd "$weatherdir"weathericonssm
+cd "$weatherdir"weathericonssm || exit
 ln -sf "$IDAY0""$NAICON".png day0.png
 ln -sf "$IDAY1".png day1.png
 ln -sf "$IDAY2".png day2.png
@@ -690,19 +690,19 @@ if [ "$BIGICON" = "Unknown" ]; then
 	ECHO "**Big icon flipped to daily.**"
 fi
 if [ "$BIGICON" != "Unknown" ]; then
-	cd "$weatherdir"weathericons
+	cd "$weatherdir"weathericons || exit
 	ln -sf "$BIGICON""$NIGHTICON".png weather.png
 	/usr/local/bin/setlabel Blue weather.png
 fi
 
 #Set moonphase icon.
-cd "$weatherdir"moonphasessm
+cd "$weatherdir"moonphasessm || exit
 ln -sf "$MOONICON".png phase.png
-cd "$weatherdir"moonphases
+cd "$weatherdir"moonphases || exit
 ln -sf "$MOONICON".png phase.png
-cd "$weatherdir"
+cd "$weatherdir" || exit
 ln -sf "$MOONPHASEDIR/$MOONICON".png phase.png
-cd "$weatherdir"moonphasesexsm
+cd "$weatherdir"moonphasesexsm || exit
 ln -sf "$MOONICON2".png phase.png
 
 #moonphases for time line.
@@ -718,15 +718,15 @@ ln -sf "$MOONTIME8".png timephase8.png
 ln -sf "$MOONTIME9".png timephase9.png
 
 #Weather Warnings
-WARNING=" - "`echo "$WeatherData" | grep -m 3 '"alerts"' -A3 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
+WARNING=" - "$(echo "$WeatherData" | grep -m 3 '"alerts"' -A3 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1)
 
 #Weather Warnings: If equal one of these, there might be an additional statement title in the next block we should use.
 if [ "$WARNING" = " - Special Statement" ] || [ "$WARNING" = " - Special Weather Statement" ]; then
-	WARNING=" - "`echo "$WeatherData" | grep -m 2 '"alerts"' -A15 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1`
+	WARNING=" - "$(echo "$WeatherData" | grep -m 2 '"alerts"' -A15 | sed 's/.*\: "//' | tail -n 1 | cut -d '"' -f1)
 fi
 
 #Weather Warnings: Check the string length, if less than 5 means garbage or no warning in string or we've failed over to the Special Statement string and it's not correct e.g. passes - KMSS.
-l2=`echo $WARNING | wc -m`
+l2=$(echo "$WARNING" | wc -m)
 if [ "$l2" -lt "8" ]; then
 	WARNING=""
 fi
@@ -744,7 +744,7 @@ fi
 ECHO -n "$WARNING" > "$weatherdatadir"warning.txt
 
 #Set any specials events.
-cd "$weatherdir"images
+cd "$weatherdir"images || exit
 
 if [ "$DATE" = "1224" ] || [ "$DATE" = "1225" ]; then
 	ln -sf santa.png eventabove.png
@@ -768,8 +768,8 @@ fi
 
 #Save the newly created data as an image from the HTML, but pause just a bit in case file system is still updating.
 sleep 5
-"$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather$ZIPCODE.jpg
-"$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb$ZIPCODE.jpg
+"$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather"$ZIPCODE".jpg
+"$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb"$ZIPCODE".jpg
 
 #Notification Center alert that we were successful.
 "$terminalnotifier"terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg terminal-notifier -sender com.apple.Terminal -activate -open https://www.wunderground.com/ -timeout 10
