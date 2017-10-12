@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#version 3.2.1
+#version 3.2.2
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -33,7 +33,7 @@ DATE=$(date +%m%d)
 #Get data from wunderground.com.
 API=$(cat "$wundergroundapi")
 cd "$weatherfeeddir" || exit
-"$wgetdir"wget -O weatherfeed$ZIPCODE.json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
+"$wgetdir"wget -O weatherfeed"$ZIPCODE".json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
 
 #Check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
 SIZE=$(ls -s weatherfeed"$ZIPCODE".json | cut -d " " -f1)
@@ -111,7 +111,6 @@ SUNRISEHR=$(echo "$WeatherData" | grep -e '"sunrise"' -A1 | tail -n 1 | sed 's/.
 SUNRISEMIN=$(echo "$WeatherData" | grep -e '"sunrise"' -A2 | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 SUNRISE="$SUNRISEHR:$SUNRISEMIN AM"
 
-SUNSETNUM=$(echo "$SUNSET" | sed -e 's/://' | cut -d " " -f1)
 SUNSETMIL="$SUNSETHR$SUNSETMIN"
 SUNRISENUM="$SUNRISEHR$SUNRISEMIN"
 
@@ -165,120 +164,121 @@ OFFSET=74
 
 #7 day forecast items.
 IPOINT=29
-IDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
+IDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+#let IPOINT=$IPOINT+$OFFSET
+IPOINT=$((IPOINT+OFFSET))
 IDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
-let IPOINT=$IPOINT+$OFFSET
-IDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-IDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-IDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-IDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-IDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+IPOINT=$((IPOINT+OFFSET))
+IDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+IDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+IDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+IDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+IDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 
 #Days
 IPOINT=14
-DDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-DDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+DDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+DDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 
 #Highs
 IPOINT=22
-HDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+HDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 
-HDAY0=`echo "$HDAY0" | sed 's/-/\&#8209;/'`
-HDAY1=`echo "$HDAY1" | sed 's/-/\&#8209;/'`
-HDAY2=`echo "$HDAY2" | sed 's/-/\&#8209;/'`
-HDAY3=`echo "$HDAY3" | sed 's/-/\&#8209;/'`
-HDAY4=`echo "$HDAY4" | sed 's/-/\&#8209;/'`
-HDAY5=`echo "$HDAY5" | sed 's/-/\&#8209;/'`
-HDAY6=`echo "$HDAY6" | sed 's/-/\&#8209;/'`
+HDAY0=$(echo "$HDAY0" | sed 's/-/\&#8209;/')
+HDAY1=$(echo "$HDAY1" | sed 's/-/\&#8209;/')
+HDAY2=$(echo "$HDAY2" | sed 's/-/\&#8209;/')
+HDAY3=$(echo "$HDAY3" | sed 's/-/\&#8209;/')
+HDAY4=$(echo "$HDAY4" | sed 's/-/\&#8209;/')
+HDAY5=$(echo "$HDAY5" | sed 's/-/\&#8209;/')
+HDAY6=$(echo "$HDAY6" | sed 's/-/\&#8209;/')
 
 #Lows
 IPOINT=26
-LDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET
-LDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1`
+LDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET))
+LDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\:"//' | cut -d '"' -f1)
 
-LDAY0=`echo "$LDAY0" | sed 's/-/\&#8209;/'`
-LDAY1=`echo "$LDAY1" | sed 's/-/\&#8209;/'`
-LDAY2=`echo "$LDAY2" | sed 's/-/\&#8209;/'`
-LDAY3=`echo "$LDAY3" | sed 's/-/\&#8209;/'`
-LDAY4=`echo "$LDAY4" | sed 's/-/\&#8209;/'`
-LDAY5=`echo "$LDAY5" | sed 's/-/\&#8209;/'`
-LDAY6=`echo "$LDAY6" | sed 's/-/\&#8209;/'`
+LDAY0=$(echo "$LDAY0" | sed 's/-/\&#8209;/')
+LDAY1=$(echo "$LDAY1" | sed 's/-/\&#8209;/')
+LDAY2=$(echo "$LDAY2" | sed 's/-/\&#8209;/')
+LDAY3=$(echo "$LDAY3" | sed 's/-/\&#8209;/')
+LDAY4=$(echo "$LDAY4" | sed 's/-/\&#8209;/')
+LDAY5=$(echo "$LDAY5" | sed 's/-/\&#8209;/')
+LDAY6=$(echo "$LDAY6" | sed 's/-/\&#8209;/')
 
 #Possibility of Precip
 IPOINT=33
-PDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-PDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1`
+PDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+PDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\"://' | cut -d ',' -f1)
 
 #Average Humidity
 IPOINT=70
-HUDAY0=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY1=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY2=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY3=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY4=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY5=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
-let IPOINT=$IPOINT+$OFFSET
-HUDAY6=`echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1`
+HUDAY0=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY1=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY2=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY3=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY4=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY5=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
+IPOINT=$((IPOINT+OFFSET))
+HUDAY6=$(echo "$WeatherData" | grep -m3 '"forecastday":' -A $IPOINT | tail -n 1 | sed 's/.*\": //' | cut -d ',' -f1)
 
 #Wind right now, round wind speed to nearest mph with awk.
-DAYWIND=`echo "$WeatherData" | grep -e '"wind_mph"' | sed 's/.*\://' | cut -d ',' -f1 | awk '{print int($1+0.5)}'`"mph"
-DAYWINDIR=`echo "$WeatherData" | grep -e '"wind_dir"' | sed 's/.*\:"//' | cut -d '"' -f1`
-DAYWINDGUST=`echo "$WeatherData" | grep -e '"wind_gust_mph"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g' | awk '{print int($1+0.5)}'`
+DAYWIND=$(echo "$WeatherData" | grep -e '"wind_mph"' | sed 's/.*\://' | cut -d ',' -f1 | awk '{print int($1+0.5)}')"mph"
+DAYWINDIR=$(echo "$WeatherData" | grep -e '"wind_dir"' | sed 's/.*\:"//' | cut -d '"' -f1)
+DAYWINDGUST=$(echo "$WeatherData" | grep -e '"wind_gust_mph"' | sed 's/.*\://' | cut -d ',' -f1 | sed 's/"//g' | awk '{print int($1+0.5)}')
 
 if [ "$DAYWIND" = "0mph" ]; then
 	DAYWIND=""
@@ -349,7 +349,7 @@ if [ "$HOUR0MIL" -gt "$SUNSETMIL" ] || [ "$HOUR0MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON0="night"
 	MOONTIME0="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
 HOUR1=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR1MIL="$HOUR1""00"
@@ -359,7 +359,7 @@ if [ "$HOUR1MIL" -gt "$SUNSETMIL" ] || [ "$HOUR1MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON1="night"
 	MOONTIME1="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
 HOUR2=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR2MIL="$HOUR2""00"
@@ -369,9 +369,9 @@ if [ "$HOUR2MIL" -gt "$SUNSETMIL" ] || [ "$HOUR2MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON2="night"
 	MOONTIME2="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR3=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR3=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR3MIL="$HOUR3""00"
 NIGHTICON3=""
 MOONTIME3="empty"
@@ -379,9 +379,9 @@ if [ "$HOUR3MIL" -gt "$SUNSETMIL" ] || [ "$HOUR3MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON3="night"
 	MOONTIME3="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR4=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR4=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR4MIL="$HOUR4""00"
 NIGHTICON4=""
 MOONTIME4="empty"
@@ -389,9 +389,9 @@ if [ "$HOUR4MIL" -gt "$SUNSETMIL" ] || [ "$HOUR4MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON4="night"
 	MOONTIME4="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR5=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR5=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR5MIL="$HOUR5""00"
 NIGHTICON5=""
 MOONTIME5="empty"
@@ -399,9 +399,9 @@ if [ "$HOUR5MIL" -gt "$SUNSETMIL" ] || [ "$HOUR5MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON5="night"
 	MOONTIME5="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR6=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR6=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR6MIL="$HOUR6""00"
 NIGHTICON6=""
 MOONTIME6="empty"
@@ -409,9 +409,9 @@ if [ "$HOUR6MIL" -gt "$SUNSETMIL" ] || [ "$HOUR6MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON6="night"
 	MOONTIME6="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR7=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR7=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR7MIL="$HOUR7""00"
 NIGHTICON7=""
 MOONTIME7="empty"
@@ -419,9 +419,9 @@ if [ "$HOUR7MIL" -gt "$SUNSETMIL" ] || [ "$HOUR7MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON7="night"
 	MOONTIME7="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR8=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR8=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR8MIL="$HOUR8""00"
 NIGHTICON8=""
 MOONTIME8="empty"
@@ -429,9 +429,9 @@ if [ "$HOUR8MIL" -gt "$SUNSETMIL" ] || [ "$HOUR8MIL" -lt "$SUNRISENUM" ]; then
 	NIGHTICON8="night"
 	MOONTIME8="$MOONICON"
 fi
-let IPOINT=$IPOINT+$OFFSET2
+IPOINT=$((IPOINT+OFFSET2))
 #
-HOUR9=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1`
+HOUR9=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 12-15 | cut -d '"' -f1)
 HOUR9MIL="$HOUR9""00"
 NIGHTICON9=""
 MOONTIME9="empty"
@@ -441,7 +441,7 @@ if [ "$HOUR9MIL" -gt "$SUNSETMIL" ] || [ "$HOUR9MIL" -lt "$SUNRISENUM" ]; then
 fi
 
 declare -a HOURS
-HOURS=( $HOUR0  $HOUR1 $HOUR2 $HOUR3 $HOUR4 $HOUR5 $HOUR6 $HOUR7 $HOUR8 $HOUR9 )
+HOURS=( "$HOUR0" "$HOUR1" "$HOUR2" "$HOUR3" "$HOUR4" "$HOUR5" "$HOUR6" "$HOUR7" "$HOUR8" "$HOUR9" )
 
 #Sort out am/pm for each hour - HOURS0-9
 x=0
@@ -459,52 +459,52 @@ fi
 if [ "${HOURS[${x}]}" = "0am" ]; then
 	HOURS[$x]="12am"
 fi
-let x=$x+1
+x=$((x+1))
 done
 
 #Hour Temps - TEMPHOUR0-9
 IPOINT=5
-TEMPHOUR0=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR1=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR2=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR3=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR4=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR5=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR6=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR7=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR8=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-TEMPHOUR9=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1`
+TEMPHOUR0=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR1=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR2=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR3=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR4=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR5=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR6=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR7=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR8=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+TEMPHOUR9=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | cut -c 24-27 | cut -d '"' -f1)
 
 #Hour Icons
 IPOINT=7
-ICONHOUR0=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR1=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR2=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR3=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR4=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR5=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR6=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR7=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR8=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
-let IPOINT=$IPOINT+$OFFSET2
-ICONHOUR9=`echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1`
+ICONHOUR0=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR1=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR2=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR3=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR4=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR5=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR6=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR7=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR8=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
+IPOINT=$((IPOINT+OFFSET2))
+ICONHOUR9=$(echo "$WeatherData" | grep -m3 '"hourly_forecast":' -A $IPOINT | tail -n 1 | sed 's/.*\: "//' | cut -d '"' -f1)
 
 #Set Moonsize icon based on sunrise/set and stars on the backgrounds as well as backgrounds. DAYNIGHT controls the symlink to the backgrounds.
 MOONPHASEDIR="moonphasessm"
@@ -512,8 +512,8 @@ DAYNIGHTSIG="blogweatherblue.css"
 DAYNIGHT="weatherblue.css"
 
 #Time variables for backgrounds
-SUNSETPLUSONE=$(expr $SUNSETMIL + "100")
-SUNRISEMINUSONE=$(expr $SUNRISENUM - "100")
+SUNSETPLUSONE=$(expr "$SUNSETMIL" + "100")
+SUNRISEMINUSONE=$(expr "$SUNRISENUM" - "100")
 
 #Grey background for overcast/fog days at daytime.
 if [ "$CURRENTCOND" = "Overcast" ]; then
@@ -588,7 +588,6 @@ ECHO -n "$LDAY6""&deg" > "$weatherdatadir"lowday6.txt
 DDAY0="Today"
 
 #NAFound from up top means we're in night mode and the Tonight icon gets a night icon w/mini moon background instead of the empty.png, High is the current temp with down-arrow "&#8595" indicating dropping, we turn off displaying sunrise & UV (Sunrise & UV is on for the new grid), and DAY0HUMID changes to TONIGHTHUMID.
-DISPLAYMOONPHASE=""
 MOONICON2="empty"
 NAICON=""
 if [ "$NA" = "NAFound" ]; then
