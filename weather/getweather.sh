@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#version 3.2.2
+#version 3.2.3
 
 #Zip code is parsed from command line. If no zip, we'll do all the ones in the array. If
 #from the command line, format is getweather.sh 12345 67890 for as many as you like.
@@ -8,10 +8,10 @@
 weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script.
 weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/" #temp storage of weather feeds.
 weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/" #where the output txt files for the html goes.
-weatherimagedir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherimages/" #location of weather widgets.
+weatherimagedir="/Volumes/web/weatherimages/" #location of weather widgets once built.
 weathercssdir="/users/majorsl/Scripts/GitHub/weather/weather/css/" #location of css files.
 wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
-wgetdir="/usr/local/bin/" #location of wget binary.
+curldir="/usr/bin/" #location of curl binary.
 wundergroundapi="/Users/majorsl/Scripts/wundergroundapi.txt" #location of your wunderground api.
 terminalnotifier="/usr/local/bin/" #location of terminal-notifier.
 #-------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +33,8 @@ DATE=$(date +%m%d)
 #Get data from wunderground.com.
 API=$(cat "$wundergroundapi")
 cd "$weatherfeeddir" || exit
-"$wgetdir"wget -O weatherfeed"$ZIPCODE".json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
+#"$wgetdir"wget -O weatherfeed"$ZIPCODE".json -q --timestamping "http://api.wunderground.com/api/$API/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/$ZIPCODE.json"
+"$curldir"curl http://api.wunderground.com/api/"$API"/conditions/astronomy/forecast7day/alerts/almanac/hourly/q/"$ZIPCODE".json > weatherfeed"$ZIPCODE".json
 
 #Check for zero or little data from the json file and abort if it's too small or 0 bytes, we'll try again at the next interval.
 SIZE=$(ls -s weatherfeed"$ZIPCODE".json | cut -d " " -f1)
@@ -767,11 +768,11 @@ fi
 
 #Save the newly created data as an image from the HTML, but pause just a bit in case file system is still updating.
 sleep 5
-"$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://weather.themajorshome.com/weather/weather.shtml "$weatherimagedir"weather"$ZIPCODE".jpg
-"$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://weather.themajorshome.com/weather/blogweather.shtml "$weatherimagedir"weatherweb"$ZIPCODE".jpg
+"$wkhtmltoimagedir"wkhtmltoimage -q --height 355 --width 296 --quality 100 http://server.themajorshome.com:8086/weather/weather.shtml "$weatherimagedir"weather"$ZIPCODE".jpg
+#"$wkhtmltoimagedir"wkhtmltoimage -q --height 205 --width 250 --quality 100 http://server.themajorshome.com:8086/weather/blogweather.shtml "$weatherimagedir"weatherweb"$ZIPCODE".jpg
 
 #Notification Center alert that we were successful.
-"$terminalnotifier"terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg terminal-notifier -sender com.apple.Terminal -activate -open https://www.wunderground.com/ -timeout 10
+"$terminalnotifier"terminal-notifier -title 'Weather Update' -message "$ZIPCODE Updated" -contentImage "$weatherimagedir"weather"$ZIPCODE".jpg terminal-notifier -sender com.apple.Terminal
 
 #Done parsing zip codes
 done
