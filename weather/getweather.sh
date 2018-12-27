@@ -8,7 +8,7 @@
 weatherdir="/Users/majorsl/Scripts/GitHub/weather/weather/" #root of this script.
 weatherfeeddir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherfeeds/" #temp storage of weather feeds.
 weatherdatadir="/Users/majorsl/Scripts/GitHub/weather/weather/weatherdata/" #where the output txt files for the html goes.
-weatherimagedir="/Volumes/web/weatherimages/" #location of weather widgets once built.
+weatherimagedir="/Users/majorsl/Library/Containers/nz.co.pixeleyes.AutoMounter/Data/Mounts/synology/SMB/web/weatherimages/" #location of weather widgets once built.
 weathercssdir="/users/majorsl/Scripts/GitHub/weather/weather/css/" #location of css files.
 wkhtmltoimagedir="/usr/local/bin/" #location of wkhtmltoimage binary.
 curldir="/usr/bin/" #location of curl binary.
