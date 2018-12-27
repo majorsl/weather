@@ -1,6 +1,8 @@
 # weather
 Kludgy weather in html with single image options.
 
+NOTE: This is now defunct. Wunderground has discontinued it's free api. If you have your own weather-station, and upload data to them, this may still be useful to display it. I have another repository with a Ubersicht widget that also displays weather info and still works using the data from DarkSky, if you're interested.
+
 This is a project that I started sometime around 2010, a time when I just starting to learn a little shell scripting. It started as pure html in an attempt to put a weather widget on a web page. It was simple and low-key.
 
 Over time, I addeed more and more to it. It became kludgy, messy and ugly and is probably a good example of feature creep with items bolted on over time.
